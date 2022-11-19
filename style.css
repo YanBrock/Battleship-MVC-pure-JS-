@@ -9,6 +9,15 @@ article {
    gap: 5px;
 }
 
+.fleet-list li, .field-size li {
+   cursor: pointer;
+   padding: 5px;
+}
+
+.fleet-list li:hover, .field-size li:hover {
+   background-color: rgb(221, 221, 221);
+}
+
 .field-wrapper {
    display: flex;
 }
@@ -16,15 +25,31 @@ article {
 .column {
    padding: 0;
    margin: 0;
+   list-style: none;
 }
 
 .cell {
-   list-style: none;
    display: block;
    text-align: center;
    width: 1rem;
    height: 1rem;
-   /* flex: 1 0 1rem; */
-   border: 1px solid gray;
    text-transform: uppercase;
+   padding: 5px;
+   cursor: default;
+}
+
+.column:not(:first-child) {
+   border-left: 1px solid gray;
+}
+
+.cell:not(:first-child) {
+   border-top: 1px solid gray;
+}
+
+.column:not(:first-child) .cell:not(:first-child):hover {
+   background-color: rgb(211, 211, 211);
+}
+
+.active {
+   background-color: rgb(255, 237, 196);
 }

@@ -41,7 +41,8 @@ export class SettingsView {
 
    #bindListeners() {
       this.#fiedSquareList.addEventListener("click", (event) => {
-         this.updateField(event);
+         this.#updateField(event);
+         this.#updateFleetList();
       })
    }
 
@@ -51,7 +52,12 @@ export class SettingsView {
       this.#field.appendChild(this.controller.handleField(10));
    }
 
-   updateField(e) {
+   #updateFleetList() {
+      const updatedFleetList = this.controller.handleFleetList();
+      this.#fleetList.replaceChildren(updatedFleetList);
+   }
+
+   #updateField(e) {
       const updatedField = this.controller.handleField(Number(e.target.id));
       this.#field.replaceChildren(updatedField);
    }
