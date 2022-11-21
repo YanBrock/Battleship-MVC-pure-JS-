@@ -10,15 +10,15 @@ export class SettingsController {
 
    };
 
-   handleSquareList() {
-      return this.#model.createFieldSquareList();
+   handleFieldSizeList(id) {;
+      return this.#model.createFieldSizeList(id);
    };
 
-   handleFleetList() {
-      return this.#model.createFleetList();
+   handleFleetList(fieldType) {
+      return this.#model.createFleetList(fieldType);
    };
 
-   handleField(size) {
-      return this.#model.createField(size);
+   handleField(fieldSizeId) {
+      return this.#model.createField(fieldSizeId);
    }
 };

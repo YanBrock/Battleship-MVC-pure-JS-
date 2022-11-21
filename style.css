@@ -3,22 +3,13 @@ article {
    gap: 3rem;
 }
 
-.fleet-list, .field-size {
+.size-list, .fleet-list {
    display: flex;
    flex-direction: column;
-   gap: 5px;
-}
+   gap: 10px;
+}  
 
-.fleet-list li, .field-size li {
-   cursor: pointer;
-   padding: 5px;
-}
-
-.fleet-list li:hover, .field-size li:hover {
-   background-color: rgb(221, 221, 221);
-}
-
-.field-wrapper {
+.field {
    display: flex;
 }
 

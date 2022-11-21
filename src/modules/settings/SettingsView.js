@@ -3,17 +3,11 @@ import { SettingsController } from "./SettingsController.js";
 
 export class SettingsView {
 
-
    #title = null;
-
-   #fiedSquareList = null;
-
+   #fieldSizeList = null;
    #fleetList = null;
-
    #field = null;
-
    #startBtn = null;
-
 
    constructor() {
       this.root = document.querySelector("article");
@@ -21,53 +15,67 @@ export class SettingsView {
 
       this.#title = document.querySelector(".title");
       this.#title.innerText = "set up your battle!";
+   };
 
-      this.#fiedSquareList = document.createElement("section");
-      this.#fiedSquareList.className = "field-size";
+   #updateFieldSizeList(id) {
+      document.querySelector(".size-list").replaceChildren(this.controller.handleFieldSizeList(id));
+   }
 
-      this.#fleetList = document.createElement("section");
-      this.#fleetList.className = "fleet-list";
+   #updateFleetList(fieldType) {
+      document.querySelector(".fleet-list").replaceChildren(this.controller.handleFleetList(fieldType));
+   }
+
+   #updateField(id) {
+      document.querySelector(".field").replaceChildren(this.controller.handleField(id));
+   }
+
+   async mount() {
+      try {
+         let sizeList = await this.controller.handleFieldSizeList(10);
+         
+         sizeList.addEventListener("click", (event) => {
+            for(let el of sizeList.children) {
+               if(el.classList.contains("active")) {
+                  el.classList.remove("active");
+               }
+            }
+            event.target.classList.add("active");
+
+            this.#updateFleetList(event.target.className.split(" ")[0]);
+            this.#updateField(Number(event.target.id));
+         });
+
+         this.root.appendChild(sizeList);
+
+      } catch {
+         throw new Error("sizeList");
+      } try {
+
+         let fleetList = await this.controller.handleFleetList("standart");
+
+         fleetList.addEventListener("click", (event) => {
+
+         });
+
+         this.root.appendChild(fleetList);
+
+      } catch {
+         throw new Error("fleetList");
+      } try {
+
+         let playerField = await this.controller.handleField(10);
+
+         playerField.addEventListener("click", (event) => {
+            
+         });
+
+         this.root.appendChild(playerField);
+
+      } catch {
+         throw new Error("playerField");
+      }
       
 
-      this.#field = document.createElement("section");
-      this.#field.className = "field";
-
-      this.#startBtn = document.createElement("button");
-      this.#startBtn.innerText = "start";
-
-      this.#bindListeners();
    };
-
-
-   #bindListeners() {
-      this.#fiedSquareList.addEventListener("click", (event) => {
-         this.#updateField(event);
-         this.#updateFleetList();
-      })
-   }
-
-   #onFirstLoad() {
-      this.#fiedSquareList.appendChild(this.controller.handleSquareList());
-      this.#fleetList.appendChild(this.controller.handleFleetList());
-      this.#field.appendChild(this.controller.handleField(10));
-   }
-
-   #updateFleetList() {
-      const updatedFleetList = this.controller.handleFleetList();
-      this.#fleetList.replaceChildren(updatedFleetList);
-   }
-
-   #updateField(e) {
-      const updatedField = this.controller.handleField(Number(e.target.id));
-      this.#field.replaceChildren(updatedField);
-   }
-
-   render() {
-      this.#onFirstLoad();
-      this.root.appendChild(this.#fiedSquareList);
-      this.root.appendChild(this.#fleetList);
-      this.root.appendChild(this.#field);
-   };
-
 
 };
