@@ -1,4 +1,6 @@
-
+//create field size list
+//create fleet list
+//create player field
 
 export class SettingsModel {
 
@@ -110,7 +112,7 @@ export class SettingsModel {
             size: "10x10 cells",
             id: 10,
          },
-         mediun: {
+         medium: {
             name: "Medium",
             size: "15x15 cells",
             id: 15,
@@ -123,54 +125,53 @@ export class SettingsModel {
       };
    };
 
-   createFieldSquareList() {
-      const list = document.createElement("ul");
+   createFieldSizeList(id) {
+
+      const list = document.createElement("section");
+      list.className = "size-list";
 
       for(let item in this.squares) {
-         const listItem = document.createElement("li");
-         listItem.id = `${this.squares[item].id}`;
+         const listItem = document.createElement("button");
+         listItem.id = this.squares[item].id;
+         listItem.className = item;
          listItem.innerText = `${this.squares[item].name} - ${this.squares[item].size}`;
-         list.appendChild(listItem);
-      };
 
-      this.chosenFleet = {...this.fleet.standart};
+         if(id === this.squares[item].id) {
+            listItem.classList.add("active");
+         }
 
-      return list;
-   };
-
-   createFleetList() {
-      const list = document.createElement("ul");
-
-      for(let ship in this.chosenFleet) {
-         const listItem = document.createElement("li");
-         listItem.id = this.chosenFleet[ship].id;
-         listItem.innerText = `${this.chosenFleet[ship].name} (${this.chosenFleet[ship].amount}) - ${this.chosenFleet[ship].size} cells`;
          list.appendChild(listItem);
       };
 
       return list;
    };
 
-   createField(squareId) {
-      if(squareId === 10) {
-         this.chosenFleet = {...this.fleet.standart};
-      } else if(squareId === 15) {
-         this.chosenFleet = {...this.fleet.medium};
-      } else {
-         this.chosenFleet = {...this.fleet.big};
+   createFleetList(fieldType) {
+      const list = document.createElement("section");
+      list.className = "fleet-list";
+
+      for(let ship in this.fleet[fieldType]) {
+         const listItem = document.createElement("button");
+         listItem.id = this.fleet[fieldType][ship].id;
+         listItem.innerText = `${this.fleet[fieldType][ship].name} (${this.fleet[fieldType][ship].amount}) - ${this.fleet[fieldType][ship].size} cells`;
+         list.appendChild(listItem);
       };
 
+      return list;
+   };
+
+   createField(fieldSizeId) {
       const alfabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
       
-      const field = document.createElement("div");
-      field.className = "field-wrapper";
+      const field = document.createElement("section");
+      field.className = "field";
 
-      for(let i = 0; i < squareId + 1; i++) {
+      for(let i = 0; i < fieldSizeId + 1; i++) {
          const column = document.createElement("ul");
          column.className = "column";
 
          if(i === 0) {
-            for(let j = 0; j < squareId + 1; j++) {
+            for(let j = 0; j < fieldSizeId + 1; j++) {
                const cell = document.createElement("li");
                cell.className = "cell";
 
@@ -182,7 +183,7 @@ export class SettingsModel {
                };
             };
          } else {
-            for(let j = 0; j < squareId + 1; j++) {
+            for(let j = 0; j < fieldSizeId + 1; j++) {
                const cell = document.createElement("li");
 
                if(j === 0) {
@@ -202,5 +203,4 @@ export class SettingsModel {
 
       return field;
    };
-
 };
