@@ -32,10 +32,16 @@ export class SettingsView {
    async mount() {
       try {
          let sizeList = await this.controller.handleFieldSizeList(10);
-
+         
          sizeList.addEventListener("click", (event) => {
-            this.#updateFieldSizeList(Number(event.target.id));
-            this.#updateFleetList(event.target.className);
+            for(let el of sizeList.children) {
+               if(el.classList.contains("active")) {
+                  el.classList.remove("active");
+               }
+            }
+            event.target.classList.add("active");
+
+            this.#updateFleetList(event.target.className.split(" ")[0]);
             this.#updateField(Number(event.target.id));
          });
 
